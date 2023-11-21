@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { BipiumOrderModule } from './order/order.module';
 import { BipiumStorageImport } from './storage/storage.module';
 
-// Модуль для работы с сервсом 
+// Модуль для работы с сервсом Бипиум
 @Module({
   imports: [
     BipiumOrderModule,
