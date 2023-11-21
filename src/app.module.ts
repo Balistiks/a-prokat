@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { BipiumModule } from './bipium/bipium.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [BipiumModule],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
