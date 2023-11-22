@@ -13,7 +13,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ./back:/opt/code
+      - ./back:/app
     depends_on:
       - redis
   redis:
