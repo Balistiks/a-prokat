@@ -22,4 +22,4 @@ import { HttpModule } from "@nestjs/axios";
     StorageProcessor,
   ],
 })
-export class BipiumStorageImport {}
+export class BipiumStorageModule {}
