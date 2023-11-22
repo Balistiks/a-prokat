@@ -18,9 +18,8 @@ export class StorageProcessor{
 
   @Process('addStorage')
   async processAddStorage(job: Job<any, any, string>): Promise<any> {
-      const order = job.data.body;
+      const order = job.data;
       this.logger.debug(job.data)
-      this.logger.debug(job.data.body)
       const storage = {
         'values': {
           '3': [{
