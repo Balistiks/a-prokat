@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  back:
+    build:
+      context: ./back
+      dockerfile: Dockerfile
+    restart: always
+    networks:
+      a-prokat:
+        aliases:
+          - back
+    ports:
+      - 3000:3000
+    volumes:
+      - ./back:/opt/code
+    depends_on:
+      - redis
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - 6379:6379
+    networks:
+      a-prokat:
+        aliases:
+          - redis
+  nginx:
+    image: nginx:latest
+    restart: always
+    volumes:
+      - ./nginx:/etc/nginx
+      - ./static:/var/www/html
+    depends_on:
+      - back
+    networks:
+      a-prokat:
+        aliases:
+          - nginx
+    ports:
+      - 80:80
+
+networks:
+  a-prokat:
+    driver: bridge
