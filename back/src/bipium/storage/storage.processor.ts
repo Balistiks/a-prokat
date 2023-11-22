@@ -18,6 +18,7 @@ export class StorageProcessor{
 
   @Process('addStorage')
   async processAddStorage(job: Job<any, any, string>): Promise<any> {
+    try {
       const order = job.data;
       this.logger.debug(job.data)
       const storage = {
@@ -29,7 +30,6 @@ export class StorageProcessor{
           '4': order.values['3']
         }
       }
-      try {
         const response = this.httpService.post(
           `https://${process.env.BIPIUM_DOMEN}.bpium.ru/api/v1/catalogs/14/records`,
           storage,
