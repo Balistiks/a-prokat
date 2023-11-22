@@ -1,6 +1,5 @@
 import { HttpService } from "@nestjs/axios";
-import { Process } from "@nestjs/bull";
-import { Processor, WorkerHost } from "@nestjs/bullmq";
+import { Process, Processor } from "@nestjs/bull";
 import { Logger } from "@nestjs/common";
 import { Job } from "bullmq";
 
@@ -10,20 +9,18 @@ const headers = {
 }
 
 @Processor('storageProcessor')
-export class StorageProcessor extends WorkerHost {
-  process(job: Job<any, any, string>, token?: string): Promise<any> {
-    throw new Error("Method not implemented.");
-  }
+export class StorageProcessor{
   constructor(
     private readonly httpService: HttpService
   ) {
-    super();
   }
+  private readonly logger = new Logger(StorageProcessor.name);
+
   @Process('addStorage')
   async processAddStorage(job: Job<any, any, string>): Promise<any> {
       const order = job.data.body;
-      console.log(job.data)
-      console.log(job.data.body)
+      this.logger.debug(job.data)
+      this.logger.debug(job.data.body)
       const storage = {
         'values': {
           '3': [{
@@ -41,9 +38,9 @@ export class StorageProcessor extends WorkerHost {
             headers: headers
           }
         )
-        return response;
+        this.logger.debug(response)
       } catch (e) {
-        Logger.log('Ошибка при cоздании склада:', e.message)
+        this.logger.debug('Ошибка при cоздании склада:', e.message)
       }
   }
 }

@@ -1,5 +1,5 @@
-import { InjectQueue, WorkerHost } from "@nestjs/bullmq";
-import { Body, Controller, Post, Req } from "@nestjs/common";
+import { InjectQueue } from "@nestjs/bull";
+import { Body, Controller, Logger, Post, Req } from "@nestjs/common";
 import { Queue } from "bullmq";
 
 // Контроллер для обработки вебхуков от Бипиум

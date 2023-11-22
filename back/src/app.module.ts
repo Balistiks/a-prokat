@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { BipiumModule } from './bipium/bipium.module';
-import { BullModule } from '@nestjs/bullmq';
 import { ConfigModule } from '@nestjs/config';
+import { BullModule } from '@nestjs/bull';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     BullModule.forRoot({
-      connection: {
+      redis: {
         host: 'redis',
         port: 6379
       }
