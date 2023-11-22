@@ -37,7 +37,7 @@ export class StorageProcessor{
             headers: headers
           }
         )
-        this.logger.debug(response)
+        this.logger.debug(JSON.stringify(response))
       } catch (e) {
         this.logger.debug('Ошибка при cоздании склада:', e.message)
       }
