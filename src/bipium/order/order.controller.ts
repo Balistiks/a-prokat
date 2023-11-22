@@ -1,16 +1,9 @@
 import { Body, Controller, Post, Req } from "@nestjs/common";
+import { Queue, Worker } from "bullmq";
 import { Request } from "express";
 
-// Контроллер для принятия запросов по заявкам
+// Контроллер для обработки запросов по заявкам
 @Controller('bipium/order')
 export class BipiumOrderController {
   constructor() {}
-
-  @Post('update')
-  async update(
-    @Req() request: Request,
-    @Body() body: any
-  ) {
-    console.log(body)
-  }
 }
