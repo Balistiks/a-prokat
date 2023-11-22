@@ -9,7 +9,7 @@ export class BipiumOrderController {
   @Post('update')
   async update(
     @Req() request: Request,
-    @Body() body
+    @Body() body: any
   ) {
     console.log(body)
   }
