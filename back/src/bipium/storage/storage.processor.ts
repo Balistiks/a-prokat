@@ -5,7 +5,7 @@ import { Job } from "bullmq";
 
 const headers = {
   'content-type': 'application/json',
-  'Cookie': process.env.CONNECT_SID
+  'Authorization': process.env.AUTHORIZATION
 }
 
 @Processor('storageProcessor')
@@ -30,16 +30,16 @@ export class StorageProcessor{
           '4': order.values['3']
         }
       }
-        const response = this.httpService.post(
-          `https://${process.env.BIPIUM_DOMEN}.bpium.ru/api/v1/catalogs/14/records`,
-          storage,
-          {
-            headers: headers
-          }
-        )
-        this.logger.debug(JSON.stringify(response))
-      } catch (e) {
-        this.logger.debug('Ошибка при cоздании склада:', e.message)
-      }
+      const response = this.httpService.post(
+        `https://${process.env.BIPIUM_DOMEN}.bpium.ru/api/v1/catalogs/14/records`,
+        storage,
+        {
+          headers: headers
+        }
+      )
+      this.logger.debug(JSON.stringify(response))
+    } catch (e) {
+      this.logger.debug('Ошибка при cоздании склада:', e.message)
+    }
   }
 }
