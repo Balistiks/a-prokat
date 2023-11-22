@@ -22,6 +22,8 @@ export class StorageProcessor extends WorkerHost {
   @Process('addStorage')
   async processAddStorage(job: Job<any, any, string>): Promise<any> {
       const order = job.data.body;
+      console.log(job.data)
+      console.log(job.data.body)
       const storage = {
         'values': {
           '3': [{
