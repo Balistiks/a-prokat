@@ -1,11 +1,12 @@
 import { HttpService } from "@nestjs/axios";
 import { Process, Processor } from "@nestjs/bull";
 import { Logger } from "@nestjs/common";
+import { AxiosError } from "axios";
 import { Job } from "bullmq";
+import { catchError, firstValueFrom } from "rxjs";
 
 const headers = {
   'content-type': 'application/json',
-  'Authorization': process.env.AUTHORIZATION
 }
 
 @Processor('storageProcessor')
@@ -30,14 +31,23 @@ export class StorageProcessor{
           '4': order.values['3']
         }
       }
-      const response = this.httpService.post(
+      const { data } = await firstValueFrom(this.httpService.post(
         `https://${process.env.BIPIUM_DOMEN}.bpium.ru/api/v1/catalogs/14/records`,
         storage,
         {
-          headers: headers
+          headers: headers,
+          auth: {
+            username: process.env.LOGIN,
+            password: process.env.PASSWORD,
+          }
         }
-      )
-      this.logger.debug(JSON.stringify(response))
+      ).pipe(
+        catchError((error: AxiosError) => {
+          this.logger.error(error.response.data);
+          throw 'Ошибка при обращении к сервису';
+        }),
+      ))
+      this.logger.debug(data)
     } catch (e) {
       this.logger.debug('Ошибка при cоздании склада:', e.message)
     }
