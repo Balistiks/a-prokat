@@ -4,7 +4,7 @@ import { Queue } from "bullmq";
 
 // Контроллер для обработки вебхуков от Бипиум
 @Controller('bipium/webhook/order')
-export class BipiumWebhookContoller {
+export class BipiumWebhookOrderContoller {
   constructor(
     @InjectQueue('addStorageQueue') private readonly addStorageQueue: Queue,
   ) {}
