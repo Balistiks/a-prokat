@@ -6,7 +6,7 @@ import { BipiumStorageImport } from './storage/storage.module';
 @Module({
   imports: [
     BipiumOrderModule,
-    BipiumStorageImport,
+    BipiumStorageImport
   ]
 })
 export class BipiumModule {}
