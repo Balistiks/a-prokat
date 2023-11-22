@@ -10,10 +10,15 @@ const headers = {
 }
 
 @Processor('storageProcessor')
-export class StorageProcessor {
+export class StorageProcessor extends WorkerHost {
+  process(job: Job<any, any, string>, token?: string): Promise<any> {
+    throw new Error("Method not implemented.");
+  }
   constructor(
     private readonly httpService: HttpService
-  ) {}
+  ) {
+    super();
+  }
   @Process('addStorage')
   async processAddStorage(job: Job<any, any, string>): Promise<any> {
       const order = job.data.body;

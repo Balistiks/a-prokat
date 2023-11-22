@@ -1,4 +1,4 @@
-import { InjectQueue } from "@nestjs/bullmq";
+import { InjectQueue, WorkerHost } from "@nestjs/bullmq";
 import { Body, Controller, Post, Req } from "@nestjs/common";
 import { Queue } from "bullmq";
 
@@ -6,7 +6,7 @@ import { Queue } from "bullmq";
 @Controller('bipium/webhook/order')
 export class BipiumWebhookOrderContoller {
   constructor(
-    @InjectQueue('addStorageQueue') private readonly addStorageQueue: Queue,
+    @InjectQueue('storageProcessor') private readonly storageProcessor: Queue,
   ) {}
 
   @Post('create')
@@ -14,7 +14,7 @@ export class BipiumWebhookOrderContoller {
     @Req() request: Request,
     @Body() body: any
   ) {
-    const storage = await this.addStorageQueue.add('addStorage', {body})
+    const storage = await this.storageProcessor.add('addStorage', {body})
     return storage;
   }
 }

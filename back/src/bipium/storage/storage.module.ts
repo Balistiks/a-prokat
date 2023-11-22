@@ -1,20 +1,20 @@
 import { Module } from "@nestjs/common";
 import { BipiumStorageService } from "./storage.service";
-import { BullModule } from "@nestjs/bullmq";
 import { StorageProcessor } from "./storage.processor";
 import { HttpModule } from "@nestjs/axios";
+import { BullModule } from "@nestjs/bullmq";
 
 // Модуль для работы со складами
 @Module({
   imports: [
-    HttpModule,
     BullModule.registerQueue({
       name: 'storageProcessor',
       connection: {
         host: 'redis',
         port: 6379
       }
-    })
+    }),
+    HttpModule,
   ],
   controllers: [],
   providers: [
@@ -22,7 +22,8 @@ import { HttpModule } from "@nestjs/axios";
     StorageProcessor,
   ],
   exports: [
-    StorageProcessor
+    StorageProcessor,
+    BullModule
   ]
 })
 export class BipiumStorageModule {}
