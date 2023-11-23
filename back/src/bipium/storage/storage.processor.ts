@@ -17,11 +17,14 @@ export class StorageProcessor{
   }
   private readonly logger = new Logger(StorageProcessor.name);
 
+  // Процесс по дабовлению скалада с коменатрием и связь заказа
   @Process('addStorage')
   async processAddStorage(job: Job<any, any, string>): Promise<any> {
     try {
+      // Данные заказа
       const order = job.data;
       this.logger.debug(job.data)
+      // Приведения данных в вид для отправки
       const storage = {
         'values': {
           '3': [{
@@ -31,6 +34,7 @@ export class StorageProcessor{
           '4': order.values['3']
         }
       }
+      // Обращение к сервису Бипиум для создания склада
       const { data } = await firstValueFrom(this.httpService.post(
         `https://${process.env.BIPIUM_DOMEN}.bpium.ru/api/v1/catalogs/14/records`,
         storage,
