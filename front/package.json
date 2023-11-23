@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "vite",
+    "start": "http-server dist -p 5173 -c 1 --push-state",
     "build": "vite build",
     "preview": "vite preview"
   },

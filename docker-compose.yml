@@ -46,6 +46,7 @@ services:
       - ./static:/var/www/html
     depends_on:
       - back
+      - front
     networks:
       a-prokat:
         aliases:
