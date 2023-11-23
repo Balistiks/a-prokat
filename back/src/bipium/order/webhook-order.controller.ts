@@ -7,6 +7,7 @@ import { Queue } from "bullmq";
 export class BipiumWebhookOrderContoller {
   constructor(
     @InjectQueue('storageProcessor') private readonly storageProcessor: Queue,
+    @InjectQueue('orderProcessor') private readonly orderProcessor: Queue,
   ) {}
 
   // Обработчик вебхука создания заявки /api/v1/bipium/webhook/order/create
@@ -19,11 +20,13 @@ export class BipiumWebhookOrderContoller {
     return(HttpStatus.OK);
   }
 
+  // Обработчик вебхука обновления заявки /api/v1/bipium/webhook/order/update
   @Post('update')
   async update(
     @Req() request: Request,
     @Body() body: any
   ) {
-
+    await this.orderProcessor.add('updateOrderComment', body.payload);
+    return(HttpStatus.OK);
   }
 }
