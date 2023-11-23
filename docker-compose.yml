@@ -1,6 +1,19 @@
 version: '3'
 
 services:
+  front:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    restart: always
+    networks:
+      a-prokat:
+        aliases:
+          - front
+    ports:
+      - 5173:5173
+    volumes:
+      - './front:/app'
   back:
     build:
       context: ./back
