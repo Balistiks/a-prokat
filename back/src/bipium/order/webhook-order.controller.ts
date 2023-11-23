@@ -14,7 +14,6 @@ export class BipiumWebhookOrderContoller {
     @Req() request: Request,
     @Body() body: any
   ) {
-    const storage = await this.storageProcessor.add('addStorage', body.payload)
-    return storage;
+    await this.storageProcessor.add('addStorage', body.payload)
   }
 }
