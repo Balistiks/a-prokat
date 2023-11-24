@@ -56,4 +56,40 @@ export class OrderProcessor {
       this.logger.error('Ошибка при изменении заказа:', e.message)
     }
   }
+
+  // Процесс по созданию заказа в Бипиум
+  @Process('addOrder')
+  async processorAddOrder(job: Job<any, any, string>): Promise<any> {
+    try {
+      // Данные для создания заказа
+      const orderData = job.data;
+      this.logger.debug(orderData)
+      // Приведени данных в вид для создания заказа в Бипиум
+      const order = {
+        "values": {
+          '3': orderData.comment
+        }
+      }
+      // Обращение к серверу Бипиум для создания заказа
+      const { data } = await firstValueFrom(this.httpService.post(
+        `https://${process.env.BIPIUM_DOMEN}.bpium.ru/api/v1/catalogs/13/records`,
+        order,
+        {
+          headers: headers,
+          auth: {
+            username: process.env.LOGIN,
+            password: process.env.PASSWORD,
+          }
+        }
+      ).pipe(
+        catchError((error: AxiosError) => {
+          this.logger.error(error.response.data);
+          throw 'Ошибка при обращении к сервису';
+        }),
+      ))
+      this.logger.debug(data)
+    } catch (e) {
+      this.logger.error('Ошибка при cоздании заказа:', e.message)
+    }
+  }
 }
