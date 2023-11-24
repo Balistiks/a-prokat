@@ -1,16 +1,40 @@
 <template>
   <div class="form">
     <h1 class="title">Добавление заявки</h1>
-    <label class="label" for="status">Статус заявки</label>
-    <input class="input" id="status" type="text">
     <label class="label" for="comment">Комментарий для заявки</label>
-    <input class="input" id="comment" type="text">
-    <button class="button">Отправить</button>
+    <input v-model="comment" class="input" id="comment" type="text">
+    <button @click="createOrder" class="button">Отправить</button>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+const http = axios.create({
+  baseURL: `http://localhost:3000`,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+})
 export default {
+  data() {
+    return {
+      comment: ""
+    }
+  },
+  methods: {
+    async createOrder() {
+
+      const order = {
+        'comment': this.comment
+      }
+      try {
+        const response = await http.post(`/api/v1/bipium/order/create`, order)
+        console.log(response)
+      } catch (e) {
+        alert(e.message)
+      }
+    }
+  }
 }
 </script>
 
