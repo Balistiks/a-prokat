@@ -10,7 +10,7 @@
 <script>
 import axios from 'axios';
 const http = axios.create({
-  baseURL: `http://localhost:3000`,
+  baseURL: `http://${import.meta.env.HOST}:3000`,
   headers: {
     'Content-Type': 'application/json',
   },
